@@ -6,7 +6,7 @@ contract Ether{
 // state  variable which is public
 	address payable public sender;
 	 address public  reciever; 
-
+      mapping (address => uint) public balances;
 	
 
 	  constructor(address payable _addr) {
@@ -21,21 +21,26 @@ contract Ether{
 //error allows you to give information of the transaction fails
 	error InsufficientBalance(uint requested, uint available);
 
-
-    
-//This function allows you to send ether
-    function send(uint amount) public payable{
-        require(msg.sender == sender);
-      
-        sender.transfer(msg.value);
-        emit Sent(msg.sender, reciever, amount);
-       
-
-    }
-    //This function allows you to deposit ether
+   //This function allows you to deposit ether
     function recieve() external payable{
        
     }
+    
+    modifier onlyOwner {
+        require(msg.sender==sender);
+        _;
+    }
 
+    
+//This function allows you to send ether
+
+    function send(uint amount) public payable{
+        require(msg.sender == sender);
+        
+        sender.transfer(msg.value);
+        emit Sent(msg.sender, reciever, amount); 
+
+    }
+ 
 
 }
