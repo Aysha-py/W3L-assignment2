@@ -19,13 +19,13 @@ contract Ether{
     event Recieved (address to, uint amount);
 
 //error allows you to give information of the transaction fails
-	error InsufficientBalance(uint requested, uint available);
+	error Unauthorized();
 
    //This function allows you to deposit ether
     function recieve() external payable{
        
     }
-    
+
     modifier onlyOwner {
         require(msg.sender==sender);
         _;
@@ -36,6 +36,9 @@ contract Ether{
 
     function send(uint amount) public payable{
         require(msg.sender == sender);
+         if (msg.sender != sender)
+            revert Unauthorized();
+
         
         sender.transfer(msg.value);
         emit Sent(msg.sender, reciever, amount); 
