@@ -6,7 +6,7 @@ contract Ether{
 // state  variable which is public
 	address payable public sender;
 	 address public  reciever; 
-      mapping (address => uint) public balances;
+
 	
 
 	  constructor(address payable _addr) {
@@ -29,12 +29,6 @@ contract Ether{
       
         sender.transfer(msg.value);
         emit Sent(msg.sender, reciever, amount);
-
-        if (amount > balances[msg.sender])
-            revert InsufficientBalance({
-                requested: amount,
-                available: balances[msg.sender]
-            });
        
 
     }
